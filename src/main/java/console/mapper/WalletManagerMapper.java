@@ -10,8 +10,8 @@ import console.model.WalletManager;
 @Mapper
 public interface WalletManagerMapper {
 
-    @Select("SELECT COUNT(*) FROM T_LOBBY_WALLET_MANAGER")
-    int countWalletManagers();
+    @Select("SELECT wallet_id, merchant_id, merchant_core FROM T_LOBBY_WALLET_MANAGER")
+    List<WalletManager> getWalletManagersBySELECT();
 
     List<WalletManager> getWalletManagerList();
 

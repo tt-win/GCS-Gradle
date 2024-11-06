@@ -21,19 +21,42 @@ public class HelloService {
         this.walletManagerMapper = walletManagerMapper;
     }
 
-    public int getAllWalletManagers() {
-        String sql = "SELECT COUNT(*) FROM T_LOBBY_WALLET_MANAGER";
-        return jdbcTemplate.queryForObject(sql, Integer.class);
+    public List<WalletManager> getAllWalletManagers() {
+        //String sql = "SELECT COUNT(*) FROM T_LOBBY_WALLET_MANAGER";
+        //return jdbcTemplate.queryForObject(sql, Integer.class);
+        long startTime = System.currentTimeMillis();
+        String sql = "SELECT wallet_id, merchant_id, merchant_core FROM T_LOBBY_WALLET_MANAGER";
+        jdbcTemplate.setFetchSize(500);
+        List<WalletManager> result = jdbcTemplate.query(sql, (rs, rowNum) -> {
+            WalletManager manager = new WalletManager();
+            manager.setWalletId(rs.getLong("wallet_id"));
+            manager.setMerchantId(rs.getLong("merchant_id"));
+            manager.setMerchantCore(rs.getString("merchant_core"));
+            return manager;
+        });
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("Query executed in "+ (endTime - startTime) +" ms ,records:"+ result.size());
+
+        return result;
     }
 
-    public int getAllWalletManagersByMybatis(){
-        return walletManagerMapper.countWalletManagers();
+    public List<WalletManager> getAllWalletManagersByMybatis(){
+        long startTime = System.currentTimeMillis();
+        List<WalletManager> result  = walletManagerMapper.getWalletManagersBySELECT();
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("Query executed in "+ (endTime - startTime) +" ms ,records:"+ result.size());
+
+        return result;
     }
 
     public List<WalletManager> getWalletManagerList() {
-        List<WalletManager> list = walletManagerMapper.getWalletManagerList();
-        System.out.println(list.size());
-        return list;
+        long startTime = System.currentTimeMillis();
+        List<WalletManager> result = walletManagerMapper.getWalletManagerList();
+        long endTime = System.currentTimeMillis();
+        System.out.println("Query executed in "+ (endTime - startTime) +" ms ,records:"+ result.size());
+        return result;
     }
 
 }
