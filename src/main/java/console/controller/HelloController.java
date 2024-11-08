@@ -2,6 +2,7 @@ package console.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -12,11 +13,15 @@ import console.model.request.HelloRequest;
 import console.service.HelloService;
 import console.service.WalletManagerNewService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Tag(name = "哈囉控制器", description = "簡單測試基本功能")
+@Tag(name = "哈囉管理", description = "簡單測試基本功能")
 public class HelloController {
 
     @Autowired
@@ -36,7 +41,7 @@ public class HelloController {
     @ApiResponse(responseCode = "200", description = "Successful hello response")
     public String hello() {
         List<WalletManager> list = helloService.getAllWalletManagers();
-        return "Hello World１!";
+        return "Hello World1!";
     }
 
     @GetMapping("/hello2")
@@ -70,12 +75,24 @@ public class HelloController {
         return "Hello World4!";
     }
 
-    @GetMapping("/hello5")
-    @Operation(summary = "Json Request 顯示測試", description = "測試Spring Doc效果")
-    @ApiResponse(responseCode = "200", description = "Successful hello response")
+    @PostMapping("/hello5")
+    @Operation(
+            summary = "Json Request 顯示測試",
+            description = "測試 Spring Doc 效果",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = HelloRequest.class)
+                    )
+            )
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "成功回應"
+    )
     public String hello5(HelloRequest helloRequest){
         System.out.println("param1:"+helloRequest.getParam1());
-
         return "Hello World5!";
     }
 

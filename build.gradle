@@ -42,7 +42,14 @@ dependencies {
     implementation 'com.oracle.database.jdbc:ojdbc8:19.8.0.0' // Oracle JDBC 驅動 (Must)
 
     // Spring Doc Open API (類似Swagger, 但比較好用)
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+    //implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+    //implementation 'io.swagger:swagger-annotations:1.6.14'
+    //implementation 'io.swagger.core.v3:swagger-annotations:2.2.15'
+
+    implementation 'org.springdoc:springdoc-openapi-webmvc-core:1.7.0'         // webmvc 支援
+    implementation 'io.swagger.core.v3:swagger-annotations:2.2.8'              // swagger 註解
+
 
     // lombok
     compileOnly 'org.projectlombok:lombok' // (Option)
