@@ -1,4 +1,4 @@
-package console.model;
+package console.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -12,10 +12,10 @@ public class WalletManagerNew {
 
     @TableId
     @TableField("wallet_id")
-    private String walletId;
+    private Long walletId;
 
     @TableField("merchant_id")
-    private String merchantId;
+    private Long merchantId;
 
     @TableField("merchant_core")
     private String merchantCore;

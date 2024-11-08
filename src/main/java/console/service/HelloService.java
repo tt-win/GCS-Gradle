@@ -5,12 +5,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import console.mapper.WalletManagerMapper;
-import console.model.WalletManager;
+import console.model.entity.WalletManager;
 
 import java.util.List;
 
 @Service
 public class HelloService {
+
+    @Autowired
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -22,8 +24,6 @@ public class HelloService {
     }
 
     public List<WalletManager> getAllWalletManagers() {
-        //String sql = "SELECT COUNT(*) FROM T_LOBBY_WALLET_MANAGER";
-        //return jdbcTemplate.queryForObject(sql, Integer.class);
         long startTime = System.currentTimeMillis();
         String sql = "SELECT wallet_id, merchant_id, merchant_core FROM T_LOBBY_WALLET_MANAGER";
         jdbcTemplate.setFetchSize(500);

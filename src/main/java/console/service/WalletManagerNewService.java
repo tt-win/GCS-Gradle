@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import console.mapper.WalletManagerNewMapper;
-import console.model.WalletManagerNew;
+import console.model.entity.WalletManagerNew;
 
 @Service
 public class WalletManagerNewService extends ServiceImpl<WalletManagerNewMapper, WalletManagerNew> {

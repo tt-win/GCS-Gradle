@@ -3,11 +3,13 @@ plugins {
     id 'war'
     id 'org.springframework.boot' version '2.7.18'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'jacoco'
 }
 
 group = 'console'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
@@ -18,27 +20,40 @@ configurations {
 }
 
 dependencies {
+
+    // Junit
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
+    // 啟動專案相關依賴(Must)
     implementation ('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.apache.tomcat.embed', module: 'tomcat-embed-websocket'
     }
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
     compileOnly 'javax.enterprise:cdi-api:2.0'
 
+    // 資料庫相關
     implementation 'org.springframework.boot:spring-boot-starter-jdbc' //jdbc 驅動 (Option)
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4' // MyBatis Spring Boot Starter (Option)
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3'  // MyBatis Plus (Option)
 
     implementation 'com.oracle.database.jdbc:ojdbc8:19.8.0.0' // Oracle JDBC 驅動 (Must)
 
+    // Spring Doc Open API (類似Swagger, 但比較好用)
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+
     // lombok
     compileOnly 'org.projectlombok:lombok' // (Option)
     annotationProcessor 'org.projectlombok:lombok' //(Option)
+
+    // 測試相關依賴
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
 }
 
 war {
@@ -52,6 +67,7 @@ bootWar {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport  // 測試完成後自動生成報告
 }
 
 sourceSets {
@@ -61,4 +77,48 @@ sourceSets {
             exclude '**/*.java'
         }
     }
+}
+
+// Jacoco 相關設定
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+jacocoTestReport {
+    dependsOn test    // 確保測試先執行
+
+    reports {
+        xml.required = true       // 生成 XML 報告
+        csv.required = false      // 不生成 CSV 報告
+        html.required = true      // 生成 HTML 報告
+    }
+
+
+    // 設定排除規則
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    // 排除 Application 類
+                    '**/Application.*',
+                    '**/Application$*.*',
+
+                    // 排除 model 包下的所有類
+                    '**/model/**',
+
+                    // 排除 config 包下的所有類
+                    '**/config/**',
+
+                    // 排除特定的其他類
+
+            ])
+        }))
+    }
+}
+
+// 確保測試任務使用正確的 Java 版本
+tasks.withType(Test) {
+    // 使用 Java 11
+    jvmArgs += ['--add-opens', 'java.base/java.lang=ALL-UNNAMED']
+    jvmArgs += ['--add-opens', 'java.base/java.util=ALL-UNNAMED']
+    jvmArgs += ['--add-opens', 'java.base/java.lang.reflect=ALL-UNNAMED']
 }

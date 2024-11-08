@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-import console.model.WalletManager;
+import console.model.entity.WalletManager;
 
 @Mapper
 public interface WalletManagerMapper {

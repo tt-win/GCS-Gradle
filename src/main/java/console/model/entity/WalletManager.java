@@ -1,11 +1,11 @@
-package console.model;
+package console.model.entity;
 
 public class WalletManager {
     private Long walletId;
     private Long merchantId;
     private String merchantCore;
 
-    public Long getWalletIdId() {
+    public Long getWalletId() {
         return walletId;
     }
 
