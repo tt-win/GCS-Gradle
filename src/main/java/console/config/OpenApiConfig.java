@@ -33,8 +33,8 @@ public class OpenApiConfig {
                               .contact(new Contact().name("API Support").email("support@example.com").url("http://example.com")))
                 // 服務器配置
                 .servers(Arrays.asList(
-                        new Server().url("http://localhost:7001").description("開發環境"),
-                        new Server().url("http://xx.xx.xx.xx:xxxx").description("SIT環境")))
+                        new Server().url("http://localhost:7001").url("/gcs-console").description("開發環境"),
+                        new Server().url("http://xx.xx.xx.xx:xxxx").url("/gcs-console") .description("SIT環境")))
 
                 // 安全機制配置
                 .security(Arrays.asList(
@@ -52,6 +52,9 @@ public class OpenApiConfig {
                                      .name("哈囉管理")
                                      .description("哈囉相關 API"))
                 .addTagsItem(new Tag()
+                                     .name("測試管理")
+                                     .description("測試相關 API"))
+                .addTagsItem(new Tag()
                                      .name("遊戲管理")
                                      .description("遊戲相關 API"))
                 // 外部文檔連結
@@ -65,15 +68,24 @@ public class OpenApiConfig {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                              .group("public-api")
-                             .pathsToMatch("/api/public/**")
+                             //.pathsToMatch("/api/public/**")
+                             .pathsToMatch("/**")
                              .build();
     }
 
-    @Bean
+    /*@Bean
     public GroupedOpenApi helloApi() {
         return GroupedOpenApi.builder()
                              .group("hello-api")
                              .pathsToMatch("/hello*")  // 匹配所有以 hello 開頭的路徑
                              .build();
     }
+
+    @Bean
+    public GroupedOpenApi testApi() {
+        return GroupedOpenApi.builder()
+                             .group("test-api")
+                             .pathsToMatch("/redis*")  // 匹配所有 /api 開頭的路徑
+                             .build();
+    }*/
 }

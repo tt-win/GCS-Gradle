@@ -11,7 +11,6 @@ import lombok.Data;
 public class WalletManagerNew {
 
     @TableId
-    @TableField("wallet_id")
     private Long walletId;
 
     @TableField("merchant_id")

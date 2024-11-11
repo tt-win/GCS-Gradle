@@ -61,6 +61,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
+
+    // Redis, 這個依賴有包含Lettuce
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 }
 
 war {
