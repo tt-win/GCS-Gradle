@@ -34,6 +34,9 @@ dependencies {
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
     compileOnly 'javax.enterprise:cdi-api:2.0'
 
+    // AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
     // 資料庫相關
     implementation 'org.springframework.boot:spring-boot-starter-jdbc' //jdbc 驅動 (Option)
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4' // MyBatis Spring Boot Starter (Option)
@@ -64,6 +67,13 @@ dependencies {
 
     // Redis, 這個依賴有包含Lettuce
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // Spring Boot Cassandra 支援
+    implementation 'org.springframework.boot:spring-boot-starter-data-cassandra'
+
+    // Caffeine, 目前先用 3.1.8, 因為穩定性和效能比較好, 退而求其次也可以用 2.9.3, 也是穩定版本兼容Java 11
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+
 
 }
 

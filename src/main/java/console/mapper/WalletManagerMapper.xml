@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="console.mapper.WalletManagerMapper">
-    <select id="getWalletManagerList" resultType="console.model.entity.WalletManager">
-        SELECT wallet_id, merchant_id, merchant_core
-        FROM T_LOBBY_WALLET_MANAGER
-    </select>
-</mapper>

@@ -9,7 +9,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 
 @SpringBootApplication
-@MapperScan("console.mapper")
+@MapperScan("console.infrastructure.persistence.mapper")
 @OpenAPIDefinition
 public class Application extends SpringBootServletInitializer {
 
