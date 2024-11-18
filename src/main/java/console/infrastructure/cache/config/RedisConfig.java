@@ -14,15 +14,14 @@ public class RedisConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
 
-        // 使用StringRedisSerializer來序列化和反序列化redis的key
-        template.setKeySerializer(new StringRedisSerializer());
-        // 使用Jackson2JsonRedisSerializer來序列化和反序列化redis的value
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-
-        template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-
+        // 全部使用字串序列化器
+        StringRedisSerializer serializer = new StringRedisSerializer();
+        template.setKeySerializer(serializer);
+        template.setValueSerializer(serializer);
+        template.setHashKeySerializer(serializer);
+        template.setHashValueSerializer(serializer);
         template.afterPropertiesSet();
+
         return template;
     }
 }

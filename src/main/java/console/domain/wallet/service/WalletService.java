@@ -38,7 +38,8 @@ public class WalletService {
 
     @DataSourceStrategy(
             key = "'wallet:merchant:' + #merchantCode",
-            order = {DataSourceType.CAFFEINE, DataSourceType.REDIS, DataSourceType.ORACLE})
+            order = {DataSourceType.CAFFEINE, DataSourceType.REDIS, DataSourceType.ORACLE}
+    )
     public List<WalletManagerNew> getWalletsTest(@PathVariable String merchantCode) {
         return walletManagerNewService.getAllWalletManagers();
     }
